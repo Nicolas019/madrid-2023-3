@@ -4,6 +4,7 @@ import com.inditex.zboost.entity.Order;
 import com.inditex.zboost.entity.OrderDetail;
 import com.inditex.zboost.exception.InvalidParameterException;
 import com.inditex.zboost.service.OrderService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,17 @@ public class OrderController {
      *
      * PISTA: Si el limit no es valido, puedes usar la excepcion InvalidParameterException para notificarlo.
      */
+
+    @GetMapping("/orders")
+    public List<Order> getOrders(@RequestParam(name = "limit", required = true) int limit, HttpServletResponse response) {
+        List<Order> orders = orderService.findOrders(limit);
+        if(orders.isEmpty()){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return orders;
+        }
+
+        return orders;
+    }
 
     @GetMapping("/orders/{orderId}")
     public OrderDetail getProductDetail(@PathVariable(name = "orderId", required = true) long orderId) {

@@ -24,7 +24,15 @@ public class OrderRepositoryImpl extends BaseRepository<Order> implements OrderR
         /*
          * TODO: EJERCICIO 2.a) Recupera un listado de los ultimos N pedidos (recuerda ordenar por fecha)
          */
-        return List.of();
+
+        if (limit < 1 || limit > 100) {
+            return List.of();
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("LIMIT", limit);
+
+        String sql = "SELECT * FROM ORDERS ORDER BY DATE DESC LIMIT :LIMIT";
+        return this.query(sql, params, Order.class);
     }
 
     @Override
@@ -49,6 +57,20 @@ public class OrderRepositoryImpl extends BaseRepository<Order> implements OrderR
          * Recuerda que, si un pedido no es encontrado por su ID, debes notificarlo debidamente como se recoge en el contrato
          * que estas implementando (codigo de estado HTTP 404 Not Found). Para ello puedes usar la excepcion {@link com.inditex.zboost.exception.NotFoundException}
          */
-        return new OrderDetail();
+        /**
+         * SELECT * FROM ORDERS
+         * INNER JOIN ORDER_ITEMS ON ORDER_ITEMS.ORDER_ID=ORDERS.ID
+         * INNER JOIN PRODUCTS ON PRODUCTS.ID = ORDER_ITEMS.PRODUCT_ID
+         * WHERE ORDERS.ID = 1
+         */
+        Map<String, Object> params = new HashMap<>();
+        params.put("ORDER_ID", orderId);
+        String sql = "SELECT * FROM ORDERS" +
+                " INNER JOIN ORDER_ITEMS ON ORDER_ITEMS.ORDER_ID=ORDERS.ID" +
+                " INNER JOIN PRODUCTS ON PRODUCTS.ID = ORDER_ITEMS.PRODUCT_ID" +
+                " WHERE ORDERS.ID = :ORDER_ID" +
+                " GROUP BY PRODUCTS.ID";
+
+        return this.queryForObject(sql, params, OrderDetail.class);
     }
 }

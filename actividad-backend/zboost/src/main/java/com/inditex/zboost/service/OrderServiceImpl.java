@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
          * Añadir una spring caché de tipo "simple". Para hacerlo, sigue la documentación de spring boot caché: 
          * https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#io.caching
          */
+        orderRepository.getOrderDetail(orderId);
 
         // Invoca al repositorio para recuperar el detalle de un pedido
         OrderDetail orderDetail = new OrderDetail();

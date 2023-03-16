@@ -144,13 +144,13 @@ En este ejercicio implementaremos las funcionalidades relativas a una de las ent
 los datos necesarios para poder pintar la parrilla de productos ordenada en función de su `score`. 
 Puedes encontrar los endpoints expuestos en el API bajo el tag `products`.
 
-### 1.a) Listar productos
+### 1.b) Listar productos
 
 En este caso de uso se requiere que la aplicación devuelva el listado de productos disponibles. **Opcionalmente**, el consumidor
 de nuestra API puede querer filtrar productos por sus categorías y dicho filtro debe aplicarse de forma **case-insensitive**
 (por ejemplo: filtrando por las categorías _'PANTs'_ o _'drEssES'_ no debe afectar al número de resultados devuelto).
 
-### 1.b) Listar categorías de productos
+### 1.a) Listar categorías de productos
 
 Dado que tenemos un catálogo de productos en nuestra base de datos, en este caso de uso lo que se requiere es devolver 
 un listado de las **diferentes** categorías de los productos.
